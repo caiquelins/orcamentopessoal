@@ -1,3 +1,4 @@
+//classe Despesa
 class Despesa {
 	constructor(ano, mes, dia, tipo, descricao, valor) {
 		this.ano = ano; 
@@ -19,6 +20,7 @@ function cadastrarDespesa() {
 	let descricao = document.getElementById('descricao');
 	let valor = document.getElementById('valor');
 
+	//instanciação da classe Despesa, passando o valor dos campos que declaramos acima
 	let despesa = new Despesa(
 		ano.value,
 		mes.value,
@@ -28,6 +30,13 @@ function cadastrarDespesa() {
 		valor.value
 	);
 
-	console.log(despesa);
+	//chama a função gravar, passando os dados da instância da classe Despesa
+	gravar(despesa);
+}
+
+//utilizada para gravar os dados vindos de despesa, dentro do Local Storage do navegador
+function gravar(d) {
+	//acessar Local Storage || JSON.stringify() faz a conversão dos atributos para JSON
+	localStorage.setItem('despesa', JSON.stringify(d));
 }
 
