@@ -69,7 +69,7 @@ class Bd {
 
 		//recuérar todas as despesas cadastradas em localStorage
 		for(let i = 1; i <= id; i++) {
-			//recuperar a despesa
+			//recuperar a despesa, variável i dentro do getitem recupera os itens do localStorage
 			let despesa = JSON.parse(localStorage.getItem(i)); //JSON.parse() converte os JSONs em objetos
 
 			//existe a possibilidade de haver índices que foram deletados. Iremos pular esses índices
@@ -80,6 +80,8 @@ class Bd {
 				continue; 
 			}
 
+			//passamos um atributo novo, retornado pelo método recuperarTodosRegistros
+			despesa.id = i;
 			despesas.push(despesa);
 		}
 
@@ -129,6 +131,11 @@ class Bd {
 		}
 
 		return despesasFiltradas;
+	}
+
+	//remove um item do localStorage, recebendo o valor de id, passado pelo click do botão excluir
+	remover(id) {
+		localStorage.removeItem(id);
 	}
 }
 
@@ -224,6 +231,25 @@ function carregaListaDespesas(despesas = Array(), filtro = false) {
 		linha.insertCell(1).innerHTML = d.tipo;
 		linha.insertCell(2).innerHTML = d.descricao;
 		linha.insertCell(3).innerHTML = d.valor;
+
+		//criar o botão de exclusão
+		let btn = document.createElement("button");
+		btn.className = 'btn btn-danger';
+		btn.innerHTML = '<i class="fas fa-times"></i>';
+		btn.id = `id_despesa_${d.id}` //acessamos o atributo id do objeto despesas e associamos o id ao valor id do botão
+		btn.onclick = function(){
+			//substituindo o valor id_despesa_ que é o valor do id do botão, para pegar apenas o número, esse número será necessário para deletar um item de localStorage
+			let id = this.id.replace('id_despesa_', '');
+
+			//passa o número do id, sem o texto "id_despesa_", para o método remover, de bd
+			bd.remover(id);
+
+			//recarrega a página
+			window.location.reload();
+		}
+		linha.insertCell(4).append(btn);
+
+		console.log(d) //retonar a variável d pois é a despesa recuperada no nos índices la em despesas.forEach
 	});
 }
 
