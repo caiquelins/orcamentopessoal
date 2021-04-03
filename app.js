@@ -86,9 +86,12 @@ function cadastrarDespesa() {
 
 	if(despesa.validarDados()) {
 		//chama a função gravar, passando os dados da instância da classe Despesa
-		//bd.gravar(despesa);
-		console.log('Dados válidos')
+		bd.gravar(despesa);
+
+		//dialog de sucesso na gravação da despesa
+		$('#sucessoGravacao').modal('show');
 	} else {
-		console.log('Dados inválidos')
+		//dialog de erro caso tenha campos faltando
+		$('#erroGravacao').modal('show');
 	}	
 }
