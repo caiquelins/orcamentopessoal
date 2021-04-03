@@ -128,7 +128,7 @@ class Bd {
 			despesasFiltradas = despesasFiltradas.filter(d => d.valor == despesa.valor);
 		}
 
-		console.log(despesasFiltradas);
+		return despesasFiltradas;
 	}
 }
 
@@ -189,14 +189,15 @@ function cadastrarDespesa() {
 	}	
 }
 
-function carregaListaDespesas() {
+function carregaListaDespesas(despesas = Array(), filtro = false) {
+	//verifica se despesas é igual a 0, e exibe todos os registros, caso contrário, exibe os que foram filtrados
+	if(despesas.length == 0 && filtro == false) {
+		despesas = bd.recuperarTodosRegistros();
+	}
 
-	let despesas = Array();
-
-	despesas = bd.recuperarTodosRegistros();
-
-	//selecionand o elemento tbody da tabela
+	//selecionando o elemento tbody da tabela
 	let listaDespesas = document.getElementById('listaDespesas');
+	listaDespesas.innerHTML = ''//limpar o conteúdo do tbody, antes da inserção de conteúdos novos
 
 	//percorrer o array despesas, listando cada despesa de forma dinâmica
 	despesas.forEach(function(d) {
@@ -239,5 +240,8 @@ function pesquisarDespesa() {
 	let despesa = new Despesa(ano, mes, dia, tipo, descricao, valor);
 
 	//chamando o método pesquisar, criado na classe bd e passando para ele uma despesa, que nada mais é que os campos que serão filtrados
-	bd.pesquisar(despesa)
+	let despesas = bd.pesquisar(despesa)
+
+	carregaListaDespesas(despesas, true);
+
 }
