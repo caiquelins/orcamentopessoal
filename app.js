@@ -88,10 +88,24 @@ function cadastrarDespesa() {
 		//chama a função gravar, passando os dados da instância da classe Despesa
 		bd.gravar(despesa);
 
-		//dialog de sucesso na gravação da despesa
-		$('#sucessoGravacao').modal('show');
+		//alteração nas classes html do modal, a partir de IDs, para apresentar as cores e mensagem de sucesso
+		document.getElementById('modal_titulo').innerHTML = 'Registro inserido com sucesso !';
+		document.getElementById('modal_titulo_div').className = 'modal-header text-success';
+		document.getElementById('modal_conteudo').innerHTML = 'A despesa foi cadastrada com sucesso !';
+		document.getElementById('modal_btn').className = 'btn btn-success';
+		document.getElementById('modal_btn').innerHTML = 'Voltar';
+
+		//dialog de sucesso na gravação da Despesa
+		$('#modalRegistraDespesa').modal('show');
 	} else {
+		//alteração nas classes html do modal, a partir de IDs, para apresentar as cores e mensagem de erro
+		document.getElementById('modal_titulo').innerHTML = 'Erro na inclusão do registro !';
+		document.getElementById('modal_titulo_div').className = 'modal-header text-danger';
+		document.getElementById('modal_conteudo').innerHTML = 'Verique se todos os campos foram preenchidos corretamente !';
+		document.getElementById('modal_btn').className = 'btn btn-danger';
+		document.getElementById('modal_btn').innerHTML = 'Voltar e corrigir';
+
 		//dialog de erro caso tenha campos faltando
-		$('#erroGravacao').modal('show');
+		$('#modalRegistraDespesa').modal('show');
 	}	
 }
