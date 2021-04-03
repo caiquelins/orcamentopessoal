@@ -123,6 +123,14 @@ function cadastrarDespesa() {
 
 		//dialog de sucesso na gravação da Despesa
 		$('#modalRegistraDespesa').modal('show');
+
+		//limpar os campos após cadastrar a despesa
+		ano.value = '';
+		mes.value = '';
+		dia.value = '';
+		tipo.value = '';
+		descricao.value = '';
+		valor.value = '';
 	} else {
 		//alteração nas classes html do modal, a partir de IDs, para apresentar as cores e mensagem de erro
 		document.getElementById('modal_titulo').innerHTML = 'Erro na inclusão do registro !';
