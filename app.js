@@ -8,6 +8,18 @@ class Despesa {
 		this.descricao = descricao; 
 		this.valor = valor; 
 	}
+
+	//método utilizado para validar se os dados preenchidos são válidos
+	validarDados() {
+		//o for in vai percorrer this, que nada mais é que todos os elementos da classe despesa, exemplo tipo, ano, mes
+		for(let i in this) {
+			//quando fazemos this[i], será retornado o elemento + o valor dele, por exemplo this.ano = 2021
+			if(this[i] == undefined || this[i] == '' || this[i] == null) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
 
 class Bd {
@@ -72,6 +84,11 @@ function cadastrarDespesa() {
 		valor.value
 	);
 
-	//chama a função gravar, passando os dados da instância da classe Despesa
-	bd.gravar(despesa);
+	if(despesa.validarDados()) {
+		//chama a função gravar, passando os dados da instância da classe Despesa
+		//bd.gravar(despesa);
+		console.log('Dados válidos')
+	} else {
+		console.log('Dados inválidos')
+	}	
 }
