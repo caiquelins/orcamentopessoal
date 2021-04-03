@@ -59,6 +59,32 @@ class Bd {
 		//atualizar o valor contido dentro da chave id, com a informação do novo id, produzido por getProximoId
 		localStorage.setItem('id', id);
 	}
+
+	recuperarTodosRegistros() {
+
+		//array de despesas
+		let despesas = Array()
+
+		let id = localStorage.getItem('id');
+
+		//recuérar todas as despesas cadastradas em localStorage
+		for(let i = 1; i <= id; i++) {
+			//recuperar a despesa
+			let despesa = JSON.parse(localStorage.getItem(i)); //JSON.parse() converte os JSONs em objetos
+
+			//existe a possibilidade de haver índices que foram deletados. Iremos pular esses índices
+			if(despesa === null) {
+				/*o continue quando identficado pelo interpretador, dentro de uma estrutura de laço, 
+				faz com que o laço avance para a interação seguinte, desconsiderando o que estive abaixo, 
+				no caso, o que for identico a null. Portanto, retorna os válidos */
+				continue; 
+			}
+
+			despesas.push(despesa);
+		}
+
+		return despesas;
+	}
 }
 
 //instanciação da classe Bd
@@ -108,4 +134,13 @@ function cadastrarDespesa() {
 		//dialog de erro caso tenha campos faltando
 		$('#modalRegistraDespesa').modal('show');
 	}	
+}
+
+function carregaListaDespesas() {
+
+	let despesas = Array();
+
+	despesas = bd.recuperarTodosRegistros();
+
+	console.log(despesas);
 }
